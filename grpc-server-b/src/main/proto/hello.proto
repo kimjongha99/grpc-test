@@ -1,0 +1,27 @@
+// protobuf 버전 3 사용
+syntax = "proto3";
+
+// proto 패키지 네임스페이스
+package hello;
+
+// 각 message를 별도 Java 파일로 생성
+option java_multiple_files = true;
+
+// 생성될 Java 클래스 패키지
+option java_package = "com.haplate.grpc.hello";
+
+// gRPC 서비스 정의
+service HelloService {
+  // 인사 요청 → 인사 응답
+  rpc SayHello (HelloRequest) returns (HelloResponse);
+}
+
+// 요청: 이름만 전달
+message HelloRequest {
+  string name = 1;
+}
+
+// 응답: 인사 메시지 반환
+message HelloResponse {
+  string message = 1;
+}
