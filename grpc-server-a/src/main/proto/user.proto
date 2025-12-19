@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package user;
+
+option java_multiple_files = true;
+option java_package = "com.haplate.grpc.user";
+
+// 사용자 + 주문목록 + 상품목록 조회 서비스
+service UserService {
+  rpc GetUserWithOrders (UserRequest) returns (UserWithOrdersResponse);
+}
+
+message UserRequest {
+  int64 user_id = 1;
+}
+
+// 복잡한 중첩 구조
+message UserWithOrdersResponse {
+  int64 user_id = 1;
+  string name = 2;
+  string email = 3;
+  string phone = 4;
+  string address = 5;
+  repeated Order orders = 6;  // 주문 목록 (리스트)
+}
+
+message Order {
+  int64 order_id = 1;
+  string order_date = 2;
+  string status = 3;
+  int64 total_price = 4;
+  repeated Product products = 5;  // 상품 목록 (중첩 리스트)
+}
+
+message Product {
+  int64 product_id = 1;
+  string name = 2;
+  string description = 3;
+  int64 price = 4;
+  int32 quantity = 5;
+}
